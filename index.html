@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+
+<!-- Trabalho feito por: Pedro Henrique Rosa Lacerda da Silva, Manuela Flores dos Santos, Luiza Victória de Vargas Carvalho -->
+
+
+
+<head>
+
+
+    <!-- css do programa -->
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500&family=Righteous&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Sarala&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Concert+One&display=swap');
+        label,
+        button,
+        input {
+            font-size: larger;
+        }
+        
+        #titulo {
+            font-family: 'Concert One', cursive;
+            font-weight: 600;
+            font-size: 50px;
+            color: #0084ff;
+            text-shadow: 3px 2px 3px rgb(138, 138, 138);
+            display: block;
+            margin-left: 10em;
+            transform: rotate(-4deg);
+            margin-top: 3%;
+        }
+        
+        #primeiro {
+            font-family: 'Sarala', sans-serif;
+            margin-left: 32em;
+            color: #4ba8ff;
+            text-shadow: 1px 1px 1px rgb(223, 192, 192);
+            margin-bottom: 0;
+            margin-top: 3em;
+            display: block;
+        }
+        
+        input {
+            width: 200px;
+            margin-left: 33em;
+            margin-top: 0;
+            margin-bottom: 1%;
+            border-radius: 20px;
+            border: 0;
+            font-family: 'Sarala', sans-serif;
+            font-weight: 500;
+            font-size: 18px;
+            background-color: #b9defc;
+        }
+        
+        #botaopermitida {
+            font-family: 'Sarala', sans-serif;
+            background-color: rgb(0, 253, 0);
+            border-color: rgb(0, 253, 0);
+            margin-top: 2%;
+            margin-left: 30em;
+            margin-right: 1%;
+            width: 110px;
+            height: 40px;
+            box-shadow: 2px 2px 2px rgb(78, 78, 78);
+            text-shadow: 1px 1px 1px rgb(255, 255, 255);
+            border-radius: 20px;
+            border: 0;
+            color: white;
+            padding: 0.2em 0.6em;
+        }
+        /* ^^^Botão de palavras permitidas^^^ */
+        
+        #botaoproibida {
+            font-family: 'Sarala', sans-serif;
+            background-color: rgb(224, 11, 11);
+            border-color: rgb(224, 11, 11);
+            margin-top: 2%;
+            margin-right: 5%;
+            width: 110px;
+            height: 40px;
+            box-shadow: 2px 2px 2px rgb(78, 78, 78);
+            text-shadow: 1px 1px 1px rgb(255, 255, 255);
+            border-radius: 20px;
+            border: 0;
+            color: white;
+            padding: 0.2em 0.6em;
+        }
+        /* ^^^Botão de palavras não permitidas^^^ */
+        
+        .Vermelho {
+            color: red;
+        }
+        
+        .Verde {
+            color: green;
+        }
+        
+        body {
+            background-image: url(fundoh.png);
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .tlista {
+            color: black;
+            text-align: center;
+        }
+        
+        .listadeco {
+            font-family: 'Sarala', sans-serif;
+            color: rgb(255, 255, 255);
+            word-wrap: break-word;
+            font-size: larger;
+            width: 150px;
+            background-color: #89c4f5;
+            margin-left: 32em;
+            margin-top: 1%;
+            border-radius: 5px;
+        }
+        
+        .nomes {
+            background-color: wheat;
+            color: #002141;
+            font-family: 'Sarala', sans-serif;
+            margin-left: 3%;
+            margin-top: 10%;
+            word-wrap: break-word;
+            width: 670px;
+            height: 55px;
+            display: block;
+            text-align: center;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Física 2T </title>
+
+</head>
+
+<body>
+    <header>
+        <label id="titulo"> Jogo das Palavras </label>
+        <label id="primeiro">Insira uma palavra:</label><br>
+        <input type="text" id="palavra" placeholder="Ex: Lápis"><br>
+
+        <section class="botoes">
+            <button id="botaopermitida">Permitida</button>
+            <button id="botaoproibida">Proibida</button>
+        </section>
+    </header>
+    <nav>
+        <div class="listadeco">
+            <p class="tlista"> Palavras adicionadas </p>
+            <ul style="list-style-type:decimal;" id="lista">
+            </ul>
+        </div>
+    </nav>
+    <section>
+        <div class="listadeco">
+            <p class="tlista"> L. Proibidas </p>
+            <ul id="listaproibida" style="list-style-type:none;">
+            </ul>
+        </div>
+
+        <div class="listadeco">
+            <p class="tlista"> L. Permitidas </p>
+            <ul id="listapermitida" style="list-style-type:none;">
+            </ul>
+        </div>
+    </section>
+
+    <section class="nomes">
+        <p> Pedro Henrique R. L. da Silva, Manuela Flores dos Santos e Luiza Victória de Vargas Carvalho <br>Turma 2T </p>
+    </section>
+
+
+
+
+    <script>
+        // Criação de variaveis
+        const palavraspermitidas = [];
+        const palavrasproibidas = [];
+        const totalLetrasPerm = {
+            A: 0,
+            B: 0,
+            C: 0,
+            D: 0,
+            E: 0,
+            F: 0,
+            G: 0,
+            H: 0,
+            I: 0,
+            J: 0,
+            K: 0,
+            L: 0,
+            M: 0,
+            N: 0,
+            O: 0,
+            P: 0,
+            Q: 0,
+            R: 0,
+            S: 0,
+            T: 0,
+            U: 0,
+            V: 0,
+            W: 0,
+            X: 0,
+            Y: 0,
+            Z: 0
+        };
+        const totalLetrasProib = {
+            A: 0,
+            B: 0,
+            C: 0,
+            D: 0,
+            E: 0,
+            F: 0,
+            G: 0,
+            H: 0,
+            I: 0,
+            J: 0,
+            K: 0,
+            L: 0,
+            M: 0,
+            N: 0,
+            O: 0,
+            P: 0,
+            Q: 0,
+            R: 0,
+            S: 0,
+            T: 0,
+            U: 0,
+            V: 0,
+            W: 0,
+            X: 0,
+            Y: 0,
+            Z: 0
+        };
+        const contador1 = {
+            num: 0
+        }
+        const contador2 = {
+            num: 0
+        }
+
+
+        // Chamando a função principal quando for apertado o botão "Permitida"
+        document.getElementById("botaopermitida").onclick = function() {
+            manipulaArray(palavraspermitidas, totalLetrasPerm, "Verde", contador1, "listapermitida");
+        }
+
+        // Chamando a função principal quando for apertado o botão "Proibida"
+        document.getElementById("botaoproibida").onclick = function() {
+            manipulaArray(palavrasproibidas, totalLetrasProib, "Vermelho", contador2, "listaproibida");
+        }
+
+        // Função principal: Confere se tem palavras repetidas e se tem alguma palavra, além de chamar outras funções
+        function manipulaArray(lista, totalLetras, classe, contador, listadiv) {
+            console.log("entrou");
+            let palavra = document.getElementById("palavra").value;
+
+            // Formatando a palavra para letras maiusculas
+            palavra = palavra.normalize('NFD').replace(/[\u0300-\u036f] /g, "").toUpperCase()
+
+            if (palavra == "" || palavra.length > 47 || /[0-9 ]/.test(palavra)) {
+                document.getElementById("palavra").value = '';
+                document.getElementById("palavra").placeholder = "Palavra inválida!";
+                document.getElementById("palavra").style.backgroundColor = "rgb(255, 142, 142)";
+                return;
+            }
+            if (palavraspermitidas.indexOf(palavra) != -1 || palavrasproibidas.indexOf(palavra) != -1) {
+                document.getElementById("palavra").value = '';
+                document.getElementById("palavra").placeholder = "Palavra repetida!";
+                document.getElementById("palavra").style.backgroundColor = "rgb(255, 142, 142)";
+                console.log("Palavra repetida!");
+                return;
+            } else {
+                document.getElementById("palavra").value = '';
+                document.getElementById("palavra").placeholder = "Ex: Lápis";
+                document.getElementById("palavra").style.backgroundColor = "#b9defc";
+
+                console.log(palavra);
+                // Adicionando a palavra em uma lista
+                lista.push(palavra);
+
+                // A função "contadorletras" verifica cada letra e conta as letras das palavras
+                let QtdLetras = contadorletras(palavra);
+
+                // A função "contadorFinal" armazena o número de vezes que uma letra repete em um objeto
+                contadorFinal(totalLetras, QtdLetras);
+                console.log(totalLetras);
+
+                // A função "quantidadeLetras" adiciona as letras e o número de vezes que repete um uma lista html
+                quantidadeLetras(totalLetras, classe, listadiv);
+
+                // Adiciona a palavra na lista HTML "Palavras Adicionadas"
+                for (contador; contador.num < lista.length; contador.num++) {
+                    let elementolista = document.createElement("li");
+                    elementolista.className = classe;
+                    elementolista.innerHTML = lista[contador.num];
+                    document.getElementById("lista").appendChild(elementolista);
+                }
+            }
+        }
+
+        // Função para contar letras da palavra
+        function contadorletras(palavra) {
+            const LetrasContadas = {}
+            for (let x of palavra) {
+                if (/[A-Z]/.test(x)) {
+                    if (x in LetrasContadas) {
+                        LetrasContadas[x]++
+                    } else {
+                        LetrasContadas[x] = 1
+                    }
+                }
+            }
+            return LetrasContadas;
+        }
+
+        // Função para juntar o total de letras das palavras
+        function contadorFinal(principal, atual) {
+            for (let key in atual) {
+                principal[key] += atual[key];
+            }
+        }
+
+        // Função para exibir exibir a letra na lista HTML
+        function quantidadeLetras(objeto, classe, listadiv) {
+            if (classe == "Verde") {
+                let ul = document.getElementById(listadiv);
+                ul.innerHTML = "";
+            } else {
+                let ul = document.getElementById(listadiv);
+                ul.innerHTML = "";
+            }
+            for (key in objeto) {
+                if (objeto[key] > 0) {
+                    if (classe == "Verde") {
+                        adicionarlistaletras(listadiv, objeto, classe);
+                    } else {
+                        adicionarlistaletras(listadiv, objeto, classe);
+                    }
+
+                }
+            }
+        }
+
+        // Função para adicionar a letra na lista HTML
+        function adicionarlistaletras(lista, objeto, classe) {
+            let elemento = document.createElement("li");
+            elemento.className = classe;
+            elemento.innerHTML = key + ": " + objeto[key];
+            document.getElementById(lista).appendChild(elemento);
+        }
+    </script>
+
+</body>
+
+</html>
